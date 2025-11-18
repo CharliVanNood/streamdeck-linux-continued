@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'main.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.5.3
+## Created by: Qt User Interface Compiler version 6.6.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
 
         self.settingsButton = QPushButton(self.centralwidget)
         self.settingsButton.setObjectName(u"settingsButton")
-        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.settingsButton.sizePolicy().hasHeightForWidth())
@@ -82,7 +82,7 @@ class Ui_MainWindow(object):
 
         self.cpu_usage = QProgressBar(self.centralwidget)
         self.cpu_usage.setObjectName(u"cpu_usage")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.cpu_usage.sizePolicy().hasHeightForWidth())
@@ -100,7 +100,7 @@ class Ui_MainWindow(object):
         self.pageActions = QHBoxLayout()
         self.pageActions.setObjectName(u"pageActions")
         self.pageActions.setContentsMargins(0, 0, 0, -1)
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.pageActions.addItem(self.horizontalSpacer)
 
@@ -128,7 +128,7 @@ class Ui_MainWindow(object):
 
         self.pages = QTabWidget(self.centralwidget)
         self.pages.setObjectName(u"pages")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
         sizePolicy2.setHeightForWidth(self.pages.sizePolicy().hasHeightForWidth())
@@ -159,7 +159,7 @@ class Ui_MainWindow(object):
         self.button_actions = QHBoxLayout()
         self.button_actions.setObjectName(u"button_actions")
         self.button_actions.setContentsMargins(-1, 10, -1, 0)
-        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.button_actions.addItem(self.horizontalSpacer_2)
 

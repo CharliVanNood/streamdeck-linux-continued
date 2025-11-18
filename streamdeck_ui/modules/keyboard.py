@@ -340,15 +340,18 @@ def keyboard_write(string: str):
             _ui.write(e.EV_KEY, e.KEY_U, 1)
             _ui.write(e.EV_KEY, e.KEY_U, 0)
 
+            # release shift + ctrl
+            _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 0)
+            _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
+
             # press unicode codepoint keys
             for hex_char in unicode_hex_keys:
                 keycode = _KEY_MAPPING[hex_char]
                 _ui.write(e.EV_KEY, keycode, 1)
                 _ui.write(e.EV_KEY, keycode, 0)
 
-            # release shift + ctrl
-            _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 0)
-            _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
+            _ui.write(e.EV_KEY, e.KEY_ENTER, 1)
+            _ui.write(e.EV_KEY, e.KEY_ENTER, 0)
 
             # send keys
             _ui.syn()
