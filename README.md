@@ -1,26 +1,14 @@
 [![streamdeck_ui - Linux compatible UI for the Elgato Stream Deck](docs/art/logo_large.png)](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui)
 _________________
 
-[![PyPI version](https://badge.fury.io/py/streamdeck-linux-gui.svg)](https://pypi.org/project/streamdeck-linux-gui/)
-[![Build Status](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui/actions/workflows/test.yaml/badge.svg)](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui/actions/workflows/test.yaml?query=branch%3Amain)
-[![Docs Status](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui/actions/workflows/docs.yml/badge.svg)](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui/actions/workflows/docs.yml)
-[![codecov](https://codecov.io/gh/streamdeck-linux-gui/streamdeck-linux-gui/branch/main/graph/badge.svg?token=I4WC0MVVZ3)](https://codecov.io/gh/streamdeck-linux-gui/streamdeck-linux-gui)
-[![Join Discord](https://img.shields.io/badge/Join%20Discord-Discord-green?labelColor=Blue&style=flat&logo=discord&link=https://discord.gg/ZCZesnEj4)](https://discord.gg/ZCZesnEj4)
-[![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://timothycrosley.github.io/isort/)
-[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
-
+## Custom Features I've added
+- Instant writing, this uses your clipboard to paste unicode text way faster ( used mainly for kaomoji (⁠.⁠ ⁠❛⁠ ⁠ᴗ⁠ ⁠❛⁠.⁠) )
+- Working Unicode characters ⸜(｡˃ ᵕ ˂ )⸝♡
 _________________
 
 **streamdeck-linux-gui** A Linux compatible UI for the Elgato Stream Deck.
 
 This project is a fork and drop-in replacement for [streamdeck_ui](https://github.com/timothycrosley/streamdeck-ui), which was abandoned after its original owner disappeared.
-
-> [!WARNING]  
-> THIS PROJECT IS IN MAINTENANCE MODE ONLY!  
-> Pull requests for critical bug fixes, dependency updates or documentation are accepted to keep the application functional, however, no new features will be accepted. 
-> For a more feature-complete project, it is recommended to use [streamcontroller](https://github.com/StreamController/StreamController).
-> You can read more about this here: [The Sunset path: Moving to StreamController](https://github.com/streamdeck-linux-gui/streamdeck-linux-gui/discussions/203)
 
 All credit to the orignal authors, and the many contributors to the project.
 
