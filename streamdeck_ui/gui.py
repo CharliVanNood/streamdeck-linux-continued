@@ -187,6 +187,7 @@ def handle_keypress(ui, deck_id: str, key: int, state: bool) -> None:
         command = api.get_button_command(deck_id, page, key)
         keys = api.get_button_keys(deck_id, page, key)
         write = api.get_button_write(deck_id, page, key)
+        write_instant = api.get_button_write_instant(deck_id, page, key)
         brightness_change = api.get_button_change_brightness(deck_id, page, key)
         switch_page = api.get_button_switch_page(deck_id, page, key)
         switch_state = api.get_button_switch_state(deck_id, page, key)
@@ -207,7 +208,7 @@ def handle_keypress(ui, deck_id: str, key: int, state: bool) -> None:
 
         if write:
             try:
-                keyboard_write(write)
+                keyboard_write(write, write_instant)
             except Exception as error:
                 print(f"Could not complete the write command: {error}")
                 show_tray_warning_message("Unable to perform write action.")
@@ -603,6 +604,7 @@ def build_button_state_form(tab) -> None:
     tab_ui.command.setText(button_state.command)
     tab_ui.keys.setText(button_state.keys)
     tab_ui.write.setPlainText(button_state.write)
+    tab_ui.write_instant.setChecked(button_state.write_instant)
     tab_ui.change_brightness.setValue(button_state.brightness_change)
     tab_ui.text_font_size.setValue(button_state.font_size or DEFAULT_FONT_SIZE)
     tab_ui.text_color.setPalette(QPalette(button_state.font_color or DEFAULT_FONT_COLOR))
@@ -625,6 +627,7 @@ def build_button_state_form(tab) -> None:
     tab_ui.command.textChanged.connect(partial(debounced_update_button_attribute, "command"))
     tab_ui.keys.textChanged.connect(partial(debounced_update_button_attribute, "keys"))
     tab_ui.write.textChanged.connect(lambda: debounced_update_button_attribute("write", tab_ui.write.toPlainText()))
+    tab_ui.write_instant.stateChanged.connect(partial(update_button_attribute, "write_instant"))
     tab_ui.change_brightness.valueChanged.connect(partial(update_button_attribute, "change_brightness"))
     tab_ui.text_font_size.valueChanged.connect(partial(update_displayed_button_attribute, "font_size"))
     tab_ui.text_font.currentTextChanged.connect(lambda: update_button_attribute_font(tab_ui, "family"))
@@ -647,6 +650,7 @@ def enable_button_configuration(ui: Ui_ButtonForm, enabled: bool):
     ui.text_font_style.setEnabled(enabled)
     ui.text_font_size.setEnabled(enabled)
     ui.write.setEnabled(enabled)
+    ui.write_instant.setEnabled(enabled)
     ui.change_brightness.setEnabled(enabled)
     ui.switch_page.setEnabled(enabled)
     ui.switch_state.setEnabled(enabled)
@@ -859,6 +863,7 @@ def _reset_build_button_state_form(ui: Ui_ButtonForm):
     ui.text_color.setPalette(QPalette(DEFAULT_FONT_COLOR))
     ui.background_color.setPalette(QPalette(DEFAULT_BACKGROUND_COLOR))
     ui.write.clear()
+    ui.write_instant.setChecked(False)
     ui.change_brightness.setValue(0)
     ui.switch_page.setValue(0)
     ui.switch_state.setValue(0)

@@ -1,13 +1,14 @@
 import time
 from typing import Dict, List, Union
 
+from pyperclip import copy as pyperclipCopy
 from evdev import InputDevice, UInput
 from evdev import ecodes as e
 from evdev import list_devices
 from PySide6.QtCore import QStringListModel, QThread
 from PySide6.QtWidgets import QCompleter
 
-_DEFAULT_KEY_PRESS_DELAY = 0.05
+_DEFAULT_KEY_PRESS_DELAY = 0.01
 _DEFAULT_KEY_SECTION_DELAY = 0.5
 
 # As far as I know all the key syms in linux are integers below 1000
@@ -295,68 +296,78 @@ def parse_keys_as_keycodes(keys: str) -> List[List[Union[str, int]]]:
     return parsed_keys
 
 
-def keyboard_write(string: str):
+def keyboard_write(string: str, instant: bool):
     _UINPUT.initialize()
     _ui = _UINPUT.device
     caps_lock_is_on = check_caps_lock()
-    for char in string:
-        is_unicode = False
-        unicode_bytes = char.encode("unicode_escape")
-        # '\u' or '\U' for unicode, or '\x' for UTF-8
-        if unicode_bytes[0] == 92 and unicode_bytes[1] in [85, 117, 120]:
-            is_unicode = True
 
-        if char in _KEY_MAPPING:
-            keycode = _KEY_MAPPING[char]
-            need_shift = False
+    if instant:
+        pyperclipCopy(string)
+        _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 1)
+        _ui.write(e.EV_KEY, e.KEY_V, 1)
+        _ui.write(e.EV_KEY, e.KEY_V, 0)
+        _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
+        _ui.syn()
+    else:
+        for char in string:
+            is_unicode = False
+            unicode_bytes = char.encode("unicode_escape")
+            # '\u' or '\U' for unicode, or '\x' for UTF-8
+            if unicode_bytes[0] == 92 and unicode_bytes[1] in [85, 117, 120]:
+                is_unicode = True
 
-            if char in _SHIFT_KEY_MAPPING:
-                need_shift = True
+            if char in _KEY_MAPPING:
+                keycode = _KEY_MAPPING[char]
+                need_shift = False
 
-            if char.isalpha() and caps_lock_is_on:
-                need_shift = not need_shift
+                if char in _SHIFT_KEY_MAPPING:
+                    need_shift = True
 
-            if need_shift:
-                _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 1)
+                if char.isalpha() and caps_lock_is_on:
+                    need_shift = not need_shift
 
-            _ui.write(e.EV_KEY, keycode, 1)
-            _ui.write(e.EV_KEY, keycode, 0)
+                if need_shift:
+                    _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 1)
 
-            if need_shift:
-                _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 0)
-
-            # send keys
-            _ui.syn()
-            time.sleep(_DEFAULT_KEY_PRESS_DELAY)
-        elif is_unicode:
-            unicode_hex = hex(int(unicode_bytes[2:], 16))
-            unicode_hex_keys = unicode_hex[2:]
-
-            # hold shift + ctrl
-            _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 1)
-            _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 1)
-
-            # press 'U' to initiate unicode sequence
-            _ui.write(e.EV_KEY, e.KEY_U, 1)
-            _ui.write(e.EV_KEY, e.KEY_U, 0)
-
-            # release shift + ctrl
-            _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 0)
-            _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
-
-            # press unicode codepoint keys
-            for hex_char in unicode_hex_keys:
-                keycode = _KEY_MAPPING[hex_char]
                 _ui.write(e.EV_KEY, keycode, 1)
                 _ui.write(e.EV_KEY, keycode, 0)
 
-            _ui.write(e.EV_KEY, e.KEY_ENTER, 1)
-            _ui.write(e.EV_KEY, e.KEY_ENTER, 0)
+                if need_shift:
+                    _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 0)
 
-            # send keys
-            _ui.syn()
-        else:
-            print(f"Unsupported character: {char}")
+                # send keys
+                _ui.syn()
+                time.sleep(_DEFAULT_KEY_PRESS_DELAY)
+            elif is_unicode:
+                unicode_hex = hex(int(unicode_bytes[2:], 16))
+                unicode_hex_keys = unicode_hex[2:]
+
+                # hold shift + ctrl
+                _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 1)
+                _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 1)
+
+                # press 'U' to initiate unicode sequence
+                _ui.write(e.EV_KEY, e.KEY_U, 1)
+                _ui.write(e.EV_KEY, e.KEY_U, 0)
+
+                # release shift + ctrl
+                _ui.write(e.EV_KEY, e.KEY_LEFTSHIFT, 0)
+                _ui.write(e.EV_KEY, e.KEY_LEFTCTRL, 0)
+
+                # press unicode codepoint keys
+                for hex_char in unicode_hex_keys:
+                    keycode = _KEY_MAPPING[hex_char]
+                    _ui.write(e.EV_KEY, keycode, 1)
+                    _ui.write(e.EV_KEY, keycode, 0)
+
+                _ui.write(e.EV_KEY, e.KEY_ENTER, 1)
+                _ui.write(e.EV_KEY, e.KEY_ENTER, 0)
+
+                # send keys
+                _ui.syn()
+                time.sleep(_DEFAULT_KEY_PRESS_DELAY)
+            else:
+                print(f"Unsupported character: {char}")
 
 
 _PRESS_KEY_THREADS: List[QThread] = []

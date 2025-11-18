@@ -91,6 +91,7 @@ class CLIStreamDeckServer:
 
 
 def execute():
+    print("creating config file")
     parser = optparse.OptionParser()
 
     parser.add_option(
@@ -143,6 +144,13 @@ def execute():
         type="string",
         dest="button_write",
         help="text to be written when the button is pressed. used with SET_WRITE",
+        metavar="VALUE",
+    )
+    parser.add_option(
+        "--write_instant",
+        type="bool",
+        dest="button_write_instant",
+        help="writes text instantly with copy and paste. used with SET_WRITE_INSTANT",
         metavar="VALUE",
     )
     parser.add_option(
@@ -206,6 +214,20 @@ def execute():
                 "page": options.page_index,
                 "button": options.button_index,
                 "write": options.button_write,
+            }
+        elif action_name == "set_write_instant":
+            if options.button_write_instant is None:
+                print("error: --write_instant not set...")
+                return
+            if options.button_index is None:
+                print("error: --button not set...")
+                return
+            data = {
+                "command": "set_write_instant",
+                "deck": options.deck_index,
+                "page": options.page_index,
+                "button": options.button_index,
+                "write_instant": options.button_write_instant,
             }
         elif action_name == "set_alignment":
             if options.button_text_alignment is None:

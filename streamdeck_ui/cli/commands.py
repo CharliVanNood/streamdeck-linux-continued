@@ -102,6 +102,22 @@ class SetButtonWriteCommand:
             self.page_index = api.get_page(deck_id)
         api.set_button_write(deck_id, self.page_index, self.button_index, self.button_write)
 
+class SetButtonWriteInstantCommand:
+    def __init__(self, cfg):
+        self.deck_index = cfg["deck"]
+        self.page_index = cfg["page"]
+        self.button_index = cfg["button"]
+        self.button_write_instant = cfg["write_instant"]
+
+    def execute(self, api: StreamDeckServer, ui):
+        deck_id = ui.device_list.itemData(ui.device_list.currentIndex())
+        if self.deck_index is not None and ui.device_list.itemData(self.deck_index) is not None:
+            deck_id = ui.device_list.itemData(self.deck_index)
+        if self.page_index is None:
+            self.page_index = api.get_page(deck_id)
+        print(self.button_write_instant)
+        api.set_button_write_instant(deck_id, self.page_index, self.button_index, self.button_write_instant)
+
 
 class SetButtonCmdCommand:
     def __init__(self, cfg):
@@ -179,6 +195,8 @@ def create_command(cfg: dict) -> tp.Optional[Command]:
         return SetButtonTextAlignmentCommand(cfg)
     elif cfg["command"] == "set_write":
         return SetButtonWriteCommand(cfg)
+    elif cfg["command"] == "set_write_instant":
+        return SetButtonWriteInstantCommand(cfg)
     elif cfg["command"] == "set_cmd":
         return SetButtonCmdCommand(cfg)
     elif cfg["command"] == "set_keys":

@@ -584,6 +584,16 @@ class StreamDeckServer:
         """Returns the text to be produced when the specified button is pressed"""
         return self._button_state(serial_number, page, button).write
 
+    def set_button_write_instant(self, serial_number: str, page: int, button: int, write_instant: bool) -> None:
+        """Sets the text meant to be written when button is pressed"""
+        if self.get_button_write_instant(serial_number, page, button) != write_instant:
+            self._button_state(serial_number, page, button).write_instant = write_instant
+            self._save_state()
+
+    def get_button_write_instant(self, serial_number: str, page: int, button: int) -> str:
+        """Returns the text to be produced when the specified button is pressed"""
+        return self._button_state(serial_number, page, button).write_instant
+
     def set_brightness(self, serial_number: str, brightness: int) -> None:
         """Sets the brightness for every button on the deck"""
         if self.get_brightness(serial_number) != brightness:

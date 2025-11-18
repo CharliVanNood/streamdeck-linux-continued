@@ -12,6 +12,8 @@ class ButtonState:
     """Combination of keys, actionable by the button"""
     write: str = ""
     """Text to write, actionable by the button"""
+    write_instant: bool = True
+    """Write text instantly with clipboard and paste"""
     command: str = ""
     """Command to execute, actionable by the button"""
     switch_page: int = 0

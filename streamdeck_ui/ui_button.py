@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QHBoxLayout,
     QLabel, QLineEdit, QPlainTextEdit, QPushButton,
     QSizePolicy, QSpinBox, QTextEdit, QVBoxLayout,
-    QWidget)
+    QWidget, QCheckBox)
 from . import resources_rc
 
 class Ui_ButtonForm(object):
@@ -354,6 +354,16 @@ class Ui_ButtonForm(object):
 
         self.formLayout.setWidget(11, QFormLayout.FieldRole, self.write)
 
+        self.label_11 = QLabel(ButtonForm)
+        self.label_11.setObjectName(u"label_11")
+
+        self.formLayout.setWidget(12, QFormLayout.LabelRole, self.label_11)
+
+        self.write_instant = QCheckBox(ButtonForm)
+        self.write_instant.setChecked(True)
+        self.write_instant.setObjectName(u"write_instant")
+
+        self.formLayout.setWidget(12, QFormLayout.FieldRole, self.write_instant)
 
         self.retranslateUi(ButtonForm)
 
@@ -402,5 +412,6 @@ class Ui_ButtonForm(object):
         self.label_10.setText(QCoreApplication.translate("ButtonForm", u"Switch state", None))
         self.label_7.setText(QCoreApplication.translate("ButtonForm", u"Brightness +/-:", None))
         self.label_6.setText(QCoreApplication.translate("ButtonForm", u"Write Text:", None))
+        self.label_11.setText(QCoreApplication.translate("ButtonForm", u"Write Instant:", None))
     # retranslateUi
 
