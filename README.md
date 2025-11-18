@@ -2,7 +2,7 @@
 _________________
 
 ## Custom Features I've added
-- Instant writing, this uses your clipboard to paste unicode text way faster ( used mainly for kaomoji (⁠.⁠ ⁠❛⁠ ⁠ᴗ⁠ ⁠❛⁠.⁠) )
+- Instant writing, this uses your clipboard to paste unicode text way faster ( mainly for kaomoji (⁠.⁠ ⁠❛⁠ ⁠ᴗ⁠ ⁠❛⁠.⁠) )
 - Working Unicode characters ⸜(｡˃ ᵕ ˂ )⸝♡
 _________________
 
